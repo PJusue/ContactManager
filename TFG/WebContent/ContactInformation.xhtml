@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/plantillas/plantilla.xhtml">
+	<ui:define name="Title">ContactManager</ui:define>
+	<ui:define name="Header"></ui:define>
+	<ui:define name="Content">
+
+		<h:form>
+			<p:dataTable var="name"
+				value="#{showContact.getName(contactsDisplay.vcard)}" row="3"
+				id="table">
+
+				<p:column headerText="Name">
+		#{name}
+		</p:column>
+				<p:column headerText="New name">
+					<p:inputText value="#{contactModifications.name}" size="23" />
+				</p:column>
+				<p:column>
+					<p:growl id="growl" life="2000" />
+					<p:commandButton value="Submit changes" update="growl "
+						styleClass="ui-priority-primary" ajax="false">
+						<f:actionListener
+							binding="#{contactModifications.modifyName(name,contactModifications.name,propertiesDescriptions.user,propertiesDescriptions.description)}" />
+						<f:actionListener binding="#{buttonView.buttonActionName()}"></f:actionListener>
+						<f:actionListener
+							binding="#{contactsDisplay.chooseVCard(contactModifications.vcard)}"></f:actionListener>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<br />
+		<br />
+		<h:form>
+
+			<p:dataTable var="email"
+				value="#{showContact.getEmails(contactsDisplay.vcard)}" row="5"
+				id="table1">
+				
+				<p:column headerText="Email">
+		#{email.value} 		
+		</p:column>
+				<p:column headerText="Email type">
+#{email.types}
+</p:column>
+
+				<p:column>
+					<p:growl id="growl2" life="2000" />
+					<p:commandButton value="Delete email" update="growl2 table1"
+						styleClass="ui-priority-primary">
+						<f:actionListener
+							binding="#{contactModifications.deleteAnEmail(email,propertiesDescriptions.user,propertiesDescriptions.description)}" />
+						<f:actionListener binding="#{buttonView.buttonActionEmail1()}"></f:actionListener>
+						<f:actionListener
+							binding="#{contactsDisplay.chooseVCard(contactModifications.vcard)}"></f:actionListener>
+					</p:commandButton>
+				</p:column>
+				<p:column>
+				<p:commandButton  update="table1" value="update" ></p:commandButton>
+				</p:column>
+			</p:dataTable>
+	
+		</h:form>
+		<br />
+		<br />
+		<h:form>
+			<p:panel header="New Email" style="width:40%">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel value="Email: " />
+					<p:inputText value="#{contactModifications.email}" />
+					<p:outputLabel value="Type: " />
+					<p:inputText value="#{contactModifications.emailType}" />
+					<p:growl id="growl3" life="2000" />
+					<p:commandButton action="ContactInformation" value="Add new email" update="growl3 "
+						styleClass="ui-priority-primary">
+						<f:actionListener
+							binding="#{contactModifications.addANewEmail(contactModifications.email,contactsDisplay.vcard,propertiesDescriptions.user,propertiesDescriptions.description,contactModifications.emailType)}" />
+						<f:actionListener binding="#{buttonView.buttonActionEmail2()}"></f:actionListener>
+						<f:actionListener
+							binding="#{contactsDisplay.chooseVCard(contactModifications.vcard)}"></f:actionListener>
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		<br />
+		<br />
+		<h:panelGroup >
+		<h:form>
+				<p:dataTable var="number" id="table2"
+					value="#{showContact.getPhone(contactsDisplay.vcard)}" rows="6">
+					<p:column headerText="Telephone number">
+	#{number.text}
+	</p:column>
+					<p:column headerText="Number type">
+						<h:outputText value="#{number.types}" />
+					</p:column>
+
+					<p:column>
+						<p:growl id="growl4" life="2000" />
+
+						<p:commandButton value="Delete phone" update="growl4 table2"
+							styleClass="ui-priority-primary">
+							
+							<f:actionListener binding="#{buttonView.buttonActionPhone1()}"></f:actionListener>
+							<f:actionListener
+								binding="#{contactModifications.deleteAPhoneNumber(number,propertiesDescriptions.user,propertiesDescriptions.description)}"></f:actionListener>
+								<f:actionListener
+								binding="#{contactsDisplay.chooseVCard(contactModifications.vcard)}"></f:actionListener>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			
+		</h:form>
+		</h:panelGroup>
+		<br />
+		<br />
+		<h:form>
+			<p:panel header="New phone number" style="width:35%">
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<p:outputLabel value="Phone number: " />
+					<p:inputText value="#{contactModifications.number}" />
+					<p:outputLabel value="Number type: " />
+					<p:inputText value="#{contactModifications.numberType}" />
+					<p:growl id="growl4" life="2000" />
+
+					<p:commandButton  action="ContactInformation" value="Add new phone" update="growl4 "
+						styleClass="ui-priority-primary">
+						<f:actionListener binding="#{buttonView.buttonActionPhone()}"></f:actionListener>
+					
+						<f:actionListener
+							binding="#{contactModifications.addNewPhoneNumber(contactModifications.number,contactModifications.numberType,contactsDisplay.vcard,propertiesDescriptions.user,propertiesDescriptions.description)}"></f:actionListener>
+								<f:actionListener
+							binding="#{contactsDisplay.chooseVCard(contactModifications.vcard)}"></f:actionListener>
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		<br />
+		<br />
+		<h:form>
+			<h:commandButton action="ContactName.xhtml"
+				value="Change the contact" />
+			<h:commandButton action="Login.xhtml" value="Change the user" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<link rel="stylesheet" type="text/css" href="Style.css"/>
+</h:head>
+<h:body>
+<div id="bg"></div>
+	<h:form>
+		<h:outputLabel value="Insert your username" /><h:inputText value="#{propertiesDescriptions.user}" />
+		<h:commandButton action="Login.xhtml" 
+			actionListener="#{propertiesDescriptions.theDescriptions(propertiesDescriptions.user)}"
+			value="Search" />
+		<ui:repeat var="addressbook" value="#{propertiesDescriptions.theDescriptions(propertiesDescriptions.user)}">
+		<br/>
+		<div id="Submit">
+		 <h:commandButton action="ContactName.xhtml" actionListener="#{propertiesDescriptions.chooseDescription(addressbook.toString())}" value="#{addressbook.toString()}" rendered="#{propertiesDescriptions.var}"/>
+		 </div>
+		 <h:outputText value="#{addressbook.toString()}" rendered="#{!propertiesDescriptions.var}" />
+		
+		</ui:repeat>
+	</h:form>
+</h:body>
+</html>

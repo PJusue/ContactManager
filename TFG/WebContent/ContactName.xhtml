@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h1></h1>
+	
+</h:head>
+<h:body>
+	<h:form>
+		<p:commandButton action="NewContact" value="Add Contact"
+			style="display:inline-block;">
+		</p:commandButton>
+
+		<p:commandButton action="Login" value="Change user"
+			style="display:inline-block;" />
+		<p:dataTable var="name"
+			value="#{contactsDisplay.showConta(propertiesDescriptions.user,propertiesDescriptions.description)}"
+			id="table" >
+
+			<p:column headerText="Name" style="text-align: center;">
+				#{name.formattedName.value}
+			</p:column>
+			<p:column style="text-align: center;">
+				<p:commandButton action="ContactInformation"
+					actionListener="#{contactsDisplay.chooseVCard(name)}" value="Edit"
+					styleClass="ui-priority-primary" />
+			</p:column>
+			<p:column style="text-align: center;">
+				<p:commandButton action="ContactName" update="table"
+					actionListener="#{contactModifications.deleteContact(name,propertiesDescriptions.user,propertiesDescriptions.description)}"
+					value="Delete" styleClass="ui-priority-primary" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+</h:body>
+</html>

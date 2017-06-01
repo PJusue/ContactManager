@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/plantillas/plantilla.xhtml">
+	<ui:define name="Title">ContactManager</ui:define>
+	<ui:define name="Header">	
+	</ui:define>
+
+	
+
+	<ui:define name="Content">
+	<h:form>
+	<div id="bg"></div>
+	<p:panel header="New Contact" style="width:40%" styleClass="Panel">
+				<h:panelGrid columns="2" cellpadding="5" styleClass="PanelGrid">
+					<p:outputLabel value="Name: " />
+					<p:inputText value="#{contactModifications.name}" />
+					<p:outputLabel value="New email: " />
+					<p:inputText value="#{contactModifications.email}" />
+					<p:outputLabel value="New email type: " />
+					<p:inputText value="#{contactModifications.emailType}" />
+					<p:outputLabel value="New phone number: " />
+					<p:inputText value="#{contactModifications.number}" />
+					<p:outputLabel value="New phone number type: " />
+					<p:inputText value="#{contactModifications.numberType}" />
+					<p:growl id="growl3" life="2000" />
+					<p:commandButton action="ContactName" value="Add new contact" 
+						styleClass="ui-priority-primary">
+						<f:actionListener
+							binding="#{contactModifications.addNewContact(contactModifications.name,contactModifications.email,contactModifications.emailType,contactModifications.number,contactModifications.numberType,propertiesDescriptions.user,propertiesDescriptions.description)}" />
+						<f:actionListener binding="#{buttonView.buttonActionEmail2()}"></f:actionListener>
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+	</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
